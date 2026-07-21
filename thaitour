@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>清邁五日遊 Chiang Mai Tour</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: {
+                            50: '#FDFBF7',
+                            100: '#F7F3E9',
+                            200: '#EFE6D5',
+                            800: '#5C5243',
+                        },
+                        lanna: {
+                            green: '#2D4A3E',  // 泰北深墨綠
+                            sage: '#8A9A86',   // 鼠尾草綠
+                            gold: '#D4A359',   // 蘭納暖金
+                            clay: '#C86D51',   // 泰北紅陶
+                            bg: '#F9F7F2'      // 奶油白底
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'Noto Sans TC', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Outfit', 'Noto Sans TC', sans-serif;
+            background-color: #F9F7F2;
+            color: #2D4A3E;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* 老人模式 / 大字模式 */
+        body.senior-mode { font-size: 1.25rem !important; }
+        body.senior-mode h1 { font-size: 2.25rem !important; }
+        body.senior-mode h2 { font-size: 1.85rem !important; }
+        body.senior-mode h3 { font-size: 1.5rem !important; }
+        body.senior-mode p, body.senior-mode span, body.senior-mode li, body.senior-mode button { 
+            font-size: 1.2rem !important; 
+            line-height: 1.6 !important;
+        }
+
+        .hide-privacy { filter: blur(5px); user-select: none; }
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-thumb { background: #8A9A86; border-radius: 4px; }
+    </style>
+</head>
+<body class="h-full flex flex-col pb-20 select-none">
+
+    <!-- 頂部 Header (包含全域「回到目錄」按鈕) -->
+    <header class="sticky top-0 z-40 bg-lanna-green text-cream-50 px-4 py-3 shadow-md flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <button onclick="switchTab('home')" class="p-2 rounded-xl bg-lanna-gold text-lanna-green hover:brightness-110 font-bold transition flex items-center gap-1.5 text-xs shadow">
+                <i class="fa-solid fa-house text-sm"></i> 目錄
+            </button>
+            <div>
+                <h1 class="text-base font-bold tracking-wide">清邁五日遊 🐘</h1>
+                <p class="text-[10px] text-cream-200">2026/07/27 - 07/31</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <!-- 個資隱私開關 -->
+            <button onclick="togglePrivacy()" id="privacyBtn" class="p-2 rounded-full bg-cream-800/40 text-cream-100 hover:bg-lanna-gold hover:text-lanna-green transition" title="隱私模糊">
+                <i class="fa-solid fa-eye-slash"></i>
+            </button>
+            <!-- 大字模式開關 -->
+            <button onclick="toggleSeniorMode()" class="px-2.5 py-1 rounded-full text-xs font-bold bg-lanna-gold text-lanna-green shadow hover:brightness-110 transition">
+                <i class="fa-solid fa-text-height mr-1"></i>大字
+            </button>
+        </div>
+    </header>
+
+    <!-- 主內容區域 (Tab 轉換) -->
+    <main class="flex-1 overflow-y-auto px-4 py-4 max-w-md mx-auto w-full">
+
+        <!-- ================= 0. HOME (主畫面九宮格目錄) ================= -->
+        <section id="tab-home" class="tab-content space-y-5">
+            
+            <!-- 可愛 Banner 卡片與可愛泰國象插圖 -->
+            <div class="bg-gradient-to-r from-lanna-green to-lanna-sage text-white rounded-3xl p-5 shadow-lg relative overflow-hidden">
+                <div class="relative z-10 space-y-1">
+                    <span class="bg-lanna-gold/30 text-lanna-gold text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-lanna-gold/40">Sawasdee Chiang Mai! 🇹🇭</span>
+                    <h2 class="text-xl font-bold">清邁精彩之旅目錄</h2>
+                    <p class="text-xs text-cream-100/90">請點擊下方功能按鈕開始探索行程：</p>
+                </div>
+                <!-- 手繪風格大象插圖 -->
+                <svg class="absolute -right-3 -bottom-3 w-32 h-32 opacity-20" viewBox="0 0 200 200" fill="currentColor">
+                    <path d="M 100,60 C 70,60 50,80 50,110 C 50,130 60,150 70,160 L 70,190 C 70,195 75,200 80,200 L 90,200 C 95,200 100,195 100,190 L 100,170 L 110,170 L 110,190 C 110,195 115,200 120,200 L 130,200 C 135,200 140,195 140,190 L 140,155 C 150,145 160,130 160,110 C 160,80 130,60 100,60 Z M 80,100 C 85,100 90,105 90,110 C 90,115 85,120 80,120 C 75,120 70,115 70,110 C 70,105 75,100 80,100 Z"/>
+                </svg>
+            </div>
+
+            <!-- 主畫面選單按鈕區 -->
+            <div class="grid grid-cols-2 gap-3">
+                
+                <button onclick="switchTab('shuttle')" class="bg-white p-3.5 rounded-2xl border border-cream-200 shadow-sm flex items-center gap-3 hover:bg-cream-50 transition text-left">
+                    <div class="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center text-lg font-bold">🚗</div>
+                    <div>
+                        <div class="font-bold text-sm text-lanna-green">機場接送</div>
+                        <div class="text-[10px] text-gray-400">接送時間與地點</div>
+                    </div>
+                </button>
+
+                <button onclick="switchTab('flight')" class="bg-white p-3.5 rounded-2xl border border-cream-200 shadow-sm flex items-center gap-3 hover:bg-cream-50 transition text-left">
+                    <div class="w-10 h-10 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center text-lg font-bold">🛫</div>
+                    <div>
+                        <div class="font-bold text-sm text-lanna-green">航班資訊</div>
+                        <div class="text-[10px] text-gray-400">中華航空 CI851/852</div>
+                    </div>
+                </button>
+
+                <button onclick="switchTab('hotel')" class="bg-white p-3.5 rounded-2xl border border-cream-200 shadow-sm flex items-center gap-3 hover:bg-cream-50 transition text-left">
+                    <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-lg font-bold">🏨</div>
+                    <div>
+                        <div class="font-bold text-sm text-lanna-green">飯店住宿</div>
+                        <div class="text-[10px] text-gray-400">阿基拉塔佩 / 那皮亞丁</div>
+                    </div>
+                </button>
+
+                <button onclick="switchTab('plan')" class="bg-white p-3.5 rounded-2xl border border-cream-200 shadow-sm flex items-center gap-3 hover:bg-cream-50 transition text-left">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-lg font-bold">📅</div>
+                    <div>
+                        <div class="font-bold text-sm text-lanna-green">每日行程</div>
+                        <div class="text-[10px] text-gray-400">Day 1 - Day 5 細節</div>
+                    </div>
+                </button>
+
+                <button onclick="switchTab('notice')" class="bg-white p-3.5 rounded-2xl border border-cream-200 shadow-sm flex items-center gap-3 hover:bg-cream-50 transition text-left">
+                    <div class="w-10 h-10 rounded-xl bg-red-100 text-red-600 flex items-center justify-center text-lg font-bold">🚨</div>
+                    <div>
+                        <div class="font-bold text-sm text-lanna-green">注意事項</div>
+                        <div class="text-[10px] text-gray-400">緊急電話與安全須知</div>
+                    </div>
+                </button>
+
+                <button onclick="switchTab('lists')" class="bg-white p-3.5 rounded-2xl border border-cream-200 shadow-sm flex items-center gap-3 hover:bg-cream-50 transition text-left">
+                    <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-lg font-bold">✅</div>
+                    <div>
+                        <div class="font-bold text-sm text-lanna-green">行前清單</div>
+                        <div class="text-[10px] text-gray-400">護照、網卡、藥品檢查</div>
+                    </div>
+                </button>
+
+                <button onclick="switchTab('info')" class="bg-white p-3.5 rounded-2xl border border-cream-200 shadow-sm flex items-center gap-3 hover:bg-cream-50 transition text-left">
+                    <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-lg font-bold">☕</div>
+                    <div>
+                        <div class="font-bold text-sm text-lanna-green">願望探店</div>
+                        <div class="text-[10px] text-gray-400">米其林與咖啡廳</div>
+                    </div>
+                </button>
+
+                <button onclick="switchTab('souvenir')" class="bg-white p-3.5 rounded-2xl border border-cream-200 shadow-sm flex items-center gap-3 hover:bg-cream-50 transition text-left">
+                    <div class="w-10 h-10 rounded-xl bg-teal-100 text-teal-600 flex items-center justify-center text-lg font-bold">🛍️</div>
+                    <div>
+                        <div class="font-bold text-sm text-lanna-green">伴手禮</div>
+                        <div class="text-[10px] text-gray-400">Big C 超市採購清單</div>
+                    </div>
+                </button>
+
+                <button onclick="switchTab('rate')" class="bg-white p-3.5 rounded-2xl border border-cream-200 shadow-sm flex items-center gap-3 hover:bg-cream-50 transition text-left">
+                    <div class="w-10 h-10 rounded-xl bg-yellow-100 text-yellow-600 flex items-center justify-center text-lg font-bold">💱</div>
+                    <div>
+                        <div class="font-bold text-sm text-lanna-green">外幣計算</div>
+                        <div class="text-[10px] text-gray-400">銀即時現鈔賣出價換算</div>
+                    </div>
+                </button>
+
+                <button onclick="switchTab('wallet')" class="bg-white p-3.5 rounded-2xl border border-cream-200 shadow-sm flex items-center gap-3 hover:bg-cream-50 transition text-left">
+                    <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-lg font-bold">💰</div>
+                    <div>
+                        <div class="font-bold text-sm text-lanna-green">記帳功能</div>
+                        <div class="text-[10px] text-gray-400">記帳明細與拍照存證</div>
+                    </div>
+                </button>
+
+                <button onclick="switchTab('translate')" class="col-span-2 bg-gradient-to-r from-lanna-gold/20 to-lanna-clay/20 p-4 rounded-2xl border border-lanna-gold/40 shadow-sm flex items-center gap-3 hover:bg-cream-100 transition text-left">
+                    <div class="w-10 h-10 rounded-xl bg-lanna-gold text-lanna-green flex items-center justify-center text-lg font-bold">🗣️</div>
+                    <div>
+                        <div class="font-bold text-sm text-lanna-green">泰文即時翻譯對照卡</div>
+                        <div class="text-[10px] text-gray-600">日常問候、點餐少冰不辣、問路與溝通句型</div>
+                    </div>
+                </button>
+
+            </div>
+        </section>
+
+        <!-- ================= 1. SHUTTLE (搭乘機場接送) ================= -->
+        <section id="tab-shuttle" class="tab-content space-y-4 hidden">
+            <div class="flex items-center justify-between">
+                <h2 class="font-bold text-lg text-lanna-green flex items-center gap-2">
+                    <span>🚗</span> 機場接送資訊
+                </h2>
+                <button onclick="switchTab('home')" class="text-xs text-lanna-clay font-bold">← 返回主畫面</button>
+            </div>
+
+            <div class="bg-white p-4 rounded-2xl border border-cream-200 shadow-sm space-y-3">
+                <div class="bg-cream-50 p-3 rounded-xl border border-cream-200 space-y-1">
+                    <span class="font-bold text-lanna-clay block text-sm">[去程接送] 2026/07/27 (一)</span>
+                    <p class="text-xs">📍 第一站：新竹 (04:00 出發) - 5人 ($1,900)</p>
+                    <p class="text-xs">📍 第二站：林口 (04:30 出發) - 1人 ($600)</p>
+                    <p class="text-[11px] text-gray-500 mt-1">預計 05:10 前抵達桃園國際機場第一航廈。</p>
+                </div>
+
+                <div class="bg-cream-50 p-3 rounded-xl border border-cream-200 space-y-1">
+                    <span class="font-bold text-lanna-clay block text-sm">[回程接送] 2026/07/31 (五)</span>
+                    <p class="text-xs">📍 新竹 - 5人 ($1,900)</p>
+                    <p class="text-[11px] text-gray-500 mt-1">💡 註：請於桃機辦理入境拿到行李後，自行聯絡包車司機指定車頭會合。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 2. FLIGHT (航班資訊) ================= -->
+        <section id="tab-flight" class="tab-content space-y-4 hidden">
+            <div class="flex items-center justify-between">
+                <h2 class="font-bold text-lg text-lanna-green flex items-center gap-2">
+                    <span>🛫</span> 航班詳細資訊
+                </h2>
+                <button onclick="switchTab('home')" class="text-xs text-lanna-clay font-bold">← 返回主畫面</button>
+            </div>
+
+            <div class="bg-white p-4 rounded-2xl border border-cream-200 shadow-sm space-y-3 text-xs">
+                <div class="border-b border-cream-200 pb-2">
+                    <span class="font-bold text-lanna-green text-sm block">中華航空 China Airlines</span>
+                </div>
+                
+                <div class="space-y-1 bg-cream-50 p-3 rounded-xl">
+                    <span class="font-bold text-lanna-green block">🛫 去程：CI851</span>
+                    <p>07:30 桃園國際機場 (TPE) ➔ 10:20 清邁國際機場 (CNX)</p>
+                </div>
+
+                <div class="space-y-1 bg-cream-50 p-3 rounded-xl">
+                    <span class="font-bold text-lanna-green block">🛬 回程：CI852</span>
+                    <p>11:20 清邁國際機場 (CNX) ➔ 16:00 桃園國際機場 (TPE)</p>
+                </div>
+
+                <div class="bg-lanna-gold/10 p-3 rounded-xl text-lanna-green space-y-1 border border-lanna-gold/30">
+                    <p>💰 經濟來回：$18,204 /人</p>
+                    <p>💰 經去商回：$22,948 /人</p>
+                    <p>🛡️ 保險：$1,676 | 📶 網卡：$185</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 3. HOTEL (飯店資訊) ================= -->
+        <section id="tab-hotel" class="tab-content space-y-4 hidden">
+            <div class="flex items-center justify-between">
+                <h2 class="font-bold text-lg text-lanna-green flex items-center gap-2">
+                    <span>🏨</span> 住宿飯店資訊
+                </h2>
+                <button onclick="switchTab('home')" class="text-xs text-lanna-clay font-bold">← 返回主畫面</button>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-cream-200 space-y-2">
+                <div class="flex justify-between items-start">
+                    <h3 class="font-bold text-lanna-green">1. 阿基拉塔佩飯店</h3>
+                    <span class="text-xs bg-lanna-gold/20 text-lanna-green px-2 py-0.5 rounded font-bold">07/27-07/29</span>
+                </div>
+                <p class="text-xs text-gray-500">Akira Thaphae Hotel / โรงแรมอาคิรา ท่าแพ</p>
+                <p class="text-xs">📍 <span class="privacy-text">Thaphae, Chang Moi, Chiang Mai</span></p>
+                <p class="text-xs">🍳 早餐：週一至五 07:00-10:00 (假日關閉)</p>
+                <p class="text-xs text-lanna-clay font-bold">⚠️ 嚴禁攜帶榴槤、山竹入住</p>
+                <a href="https://maps.app.goo.gl/n1uugu3ECD6roM3G7?g_st=ic" target="_blank" class="mt-2 inline-block text-xs bg-lanna-green text-white px-3 py-1.5 rounded-lg">
+                    <i class="fa-solid fa-map-location-dot"></i> 開啟地圖
+                </a>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-cream-200 space-y-2">
+                <div class="flex justify-between items-start">
+                    <h3 class="font-bold text-lanna-green">2. 那皮亞丁精品飯店</h3>
+                    <span class="text-xs bg-lanna-gold/20 text-lanna-green px-2 py-0.5 rounded font-bold">07/29-07/31</span>
+                </div>
+                <p class="text-xs text-gray-500">Nampiangdin Boutique Hotel / น้ำเพียงดิน บูติค โฮเทล</p>
+                <p class="text-xs">📍 <span class="privacy-text">14/3 Nantaram 5 Kor Alley, Haiya</span></p>
+                <p class="text-xs">🍳 早餐：每日 07:00-10:00</p>
+                <p class="text-xs">💰 費用：$5,400 (4晚/人總價)</p>
+                <a href="https://maps.app.goo.gl/EZeeKqaLUmzax9vF7?g_st=ic" target="_blank" class="mt-2 inline-block text-xs bg-lanna-green text-white px-3 py-1.5 rounded-lg">
+                    <i class="fa-solid fa-map-location-dot"></i> 開啟地圖
+                </a>
+            </div>
+        </section>
+
+        <!-- ================= 4. PLAN (每日行程) ================= -->
+        <section id="tab-plan" class="tab-content space-y-4 hidden">
+            <div class="flex items-center justify-between">
+                <h2 class="font-bold text-lg text-lanna-green flex items-center gap-2">
+                    <span>📅</span> 每日行程安排
+                </h2>
+                <button onclick="switchTab('home')" class="text-xs text-lanna-clay font-bold">← 返回主畫面</button>
+            </div>
+
+            <div class="flex gap-1 overflow-x-auto pb-1" id="day-tabs">
+                <button onclick="switchDay(1)" id="day-tab-1" class="day-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-lanna-green text-white">Day 1 (7/27)</button>
+                <button onclick="switchDay(2)" id="day-tab-2" class="day-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-cream-200 text-lanna-green">Day 2 (7/28)</button>
+                <button onclick="switchDay(3)" id="day-tab-3" class="day-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-cream-200 text-lanna-green">Day 3 (7/29)</button>
+                <button onclick="switchDay(4)" id="day-tab-4" class="day-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-cream-200 text-lanna-green">Day 4 (7/30)</button>
+                <button onclick="switchDay(5)" id="day-tab-5" class="day-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-cream-200 text-lanna-green">Day 5 (7/31)</button>
+            </div>
+
+            <div id="itinerary-list" class="space-y-3"></div>
+        </section>
+
+        <!-- ================= 5. NOTICE (注意事項) ================= -->
+        <section id="tab-notice" class="tab-content space-y-4 hidden">
+            <div class="flex items-center justify-between">
+                <h2 class="font-bold text-lg text-lanna-green flex items-center gap-2">
+                    <span>🚨</span> 安全須知與小叮嚀
+                </h2>
+                <button onclick="switchTab('home')" class="text-xs text-lanna-clay font-bold">← 返回主畫面</button>
+            </div>
+
+            <div class="bg-cream-100/80 rounded-2xl p-4 border border-cream-200 space-y-3 text-xs">
+                <h3 class="font-bold text-lanna-green text-sm">📞 緊急聯絡電話</h3>
+                <div class="space-y-1.5 bg-white p-3 rounded-xl border border-cream-200">
+                    <p>• 泰國觀光警察：<a href="tel:1155" class="text-lanna-clay font-bold underline">1155</a> (具備中文服務)</p>
+                    <p>• 救護車/急救電話：<a href="tel:1669" class="text-lanna-clay font-bold underline">1669</a></p>
+                    <p>• 駐泰國台北經濟文化辦事處：<a href="tel:+66818258208" class="text-lanna-clay font-bold underline">+66-81-825-8208</a></p>
+                </div>
+
+                <h3 class="font-bold text-lanna-green text-sm">💡 泰國旅遊注意事項</h3>
+                <div class="bg-white p-3 rounded-xl border border-cream-200 space-y-2">
+                    <p>• 💵 <strong>現金抽查：</strong> 入境泰國每人需準備等值 20,000 泰銖現金以備海關抽查。</p>
+                    <p>• 🛕 <strong>寺廟禮儀：</strong> 參訪白廟、藍廟等寺廟請勿穿著短褲、無袖背心。</p>
+                    <p>• 🚗 <strong>交通安全：</strong> 泰國為右駕國家，跨越馬路請先注意右方來車。</p>
+                    <p>• 🏨 <strong>水果禁令：</strong> 多數飯店嚴禁帶榴槤及山竹入住，违者罰款。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 6. LISTS (行前清單) ================= -->
+        <section id="tab-lists" class="tab-content space-y-4 hidden">
+            <div class="flex items-center justify-between">
+                <h2 class="font-bold text-lg text-lanna-green flex items-center gap-2">
+                    <span>✅</span> 行前必備檢查清單
+                </h2>
+                <button onclick="switchTab('home')" class="text-xs text-lanna-clay font-bold">← 返回主畫面</button>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-cream-200 space-y-3">
+                <div id="checklist-container" class="space-y-2 text-sm"></div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-cream-200 space-y-3">
+                <h3 class="font-bold text-lanna-green text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-note-sticky text-lanna-gold"></i> 個人隨手備忘錄
+                </h3>
+                <textarea id="memo-input" rows="3" placeholder="備忘文字、行程重點或貼上網址..." class="w-full p-2.5 border border-cream-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-lanna-sage"></textarea>
+                <button onclick="saveMemo()" class="bg-lanna-green text-white px-4 py-1.5 rounded-lg text-xs font-bold shadow">保存備忘</button>
+                <div id="memo-display" class="pt-2 text-sm text-gray-700 border-t border-cream-100 break-words"></div>
+            </div>
+        </section>
+
+        <!-- ================= 7. INFO (願望探店) ================= -->
+        <section id="tab-info" class="tab-content space-y-4 hidden">
+            <div class="flex items-center justify-between">
+                <h2 class="font-bold text-lg text-lanna-green flex items-center gap-2">
+                    <span>☕</span> 願望探店指南
+                </h2>
+                <button onclick="switchTab('home')" class="text-xs text-lanna-clay font-bold">← 返回主畫面</button>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-cream-200 space-y-3">
+                <div class="flex justify-between items-center">
+                    <span class="text-xs text-gray-500">米其林推薦餐廳與特色咖啡廳</span>
+                    <button onclick="openAddWishModal()" class="text-xs bg-lanna-gold/20 text-lanna-green px-2 py-1 rounded-lg font-bold">+ 新增</button>
+                </div>
+                <div id="wishlist-container" class="space-y-2"></div>
+            </div>
+        </section>
+
+        <!-- ================= 8. SOUVENIR (伴手禮) ================= -->
+        <section id="tab-souvenir" class="tab-content space-y-4 hidden">
+            <div class="flex items-center justify-between">
+                <h2 class="font-bold text-lg text-lanna-green flex items-center gap-2">
+                    <span>🛍️</span> 伴手禮採購清單
+                </h2>
+                <button onclick="switchTab('home')" class="text-xs text-lanna-clay font-bold">← 返回主畫面</button>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-cream-200 space-y-3">
+                <p class="text-xs text-gray-500">Big C 超市、手標泰奶、香氛與刺繡大象包：</p>
+                <div id="souvenir-container" class="space-y-2"></div>
+            </div>
+        </section>
+
+        <!-- ================= 9. RATE (外幣計算與銀行即時賣出價) ================= -->
+        <section id="tab-rate" class="tab-content space-y-4 hidden">
+            <div class="flex items-center justify-between">
+                <h2 class="font-bold text-lg text-lanna-green flex items-center gap-2">
+                    <span>💱</span> 外幣計算（銀行現鈔賣出價）
+                </h2>
+                <button onclick="switchTab('home')" class="text-xs text-lanna-clay font-bold">← 返回主畫面</button>
+            </div>
+
+            <div class="bg-lanna-green text-cream-50 p-5 rounded-2xl shadow-md space-y-4">
+                <div class="flex justify-between items-center">
+                    <span class="text-xs text-cream-200">即時外匯換算 (THB / TWD)</span>
+                    <button onclick="fetchLiveExchangeRate()" class="text-[10px] bg-lanna-gold text-lanna-green font-bold px-2 py-1 rounded-lg flex items-center gap-1 shadow">
+                        <i class="fa-solid fa-arrows-rotate"></i> 即時更新外匯
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-xs text-cream-200">泰銖 (THB)</label>
+                        <input type="number" id="calc-thb" value="100" oninput="convertCurrency('thb')" class="w-full mt-1 bg-white/10 text-white rounded-lg p-2 font-bold text-lg focus:outline-none focus:ring-2 focus:ring-lanna-gold">
+                    </div>
+                    <div>
+                        <label class="text-xs text-cream-200">折合台幣 (TWD)</label>
+                        <input type="number" id="calc-twd" value="98" oninput="convertCurrency('twd')" class="w-full mt-1 bg-white/10 text-white rounded-lg p-2 font-bold text-lg focus:outline-none focus:ring-2 focus:ring-lanna-gold">
+                    </div>
+                </div>
+
+                <div class="text-[11px] text-cream-200 pt-2 border-t border-cream-200/20 flex justify-between items-center">
+                    <span>參考銀現鈔賣出匯率：<strong id="current-rate-display">0.9850</strong></span>
+                    <span id="rate-update-time" class="text-[9px] opacity-80">自動即時換算</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 10. WALLET (記帳功能) ================= -->
+        <section id="tab-wallet" class="tab-content space-y-4 hidden">
+            <div class="flex items-center justify-between">
+                <h2 class="font-bold text-lg text-lanna-green flex items-center gap-2">
+                    <span>💰</span> 旅遊消費記帳
+                </h2>
+                <button onclick="switchTab('home')" class="text-xs text-lanna-clay font-bold">← 返回主畫面</button>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-cream-200 space-y-3">
+                <h3 class="font-bold text-sm text-lanna-green">新增消費紀錄</h3>
+                <div class="grid grid-cols-2 gap-2">
+                    <input type="text" id="expense-item" placeholder="品項 (如: 泰奶)" class="p-2 border border-cream-200 rounded-lg text-sm">
+                    <input type="number" id="expense-amount" placeholder="泰銖金額" class="p-2 border border-cream-200 rounded-lg text-sm">
+                </div>
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                    <input type="text" id="expense-payer" placeholder="先付款人" class="p-2 border border-cream-200 rounded-lg">
+                    <select id="expense-method" class="p-2 border border-cream-200 rounded-lg bg-white">
+                        <option value="現金">💵 現金</option>
+                        <option value="信用卡">💳 信用卡</option>
+                    </select>
+                </div>
+                <div class="flex items-center gap-2">
+                    <label class="flex-1 text-center bg-cream-100 hover:bg-cream-200 text-lanna-green p-2 rounded-lg text-xs cursor-pointer transition border border-cream-200">
+                        <i class="fa-solid fa-camera mr-1"></i> 上傳收據/照片
+                        <input type="file" accept="image/*" id="expense-photo" class="hidden" onchange="handlePhotoUpload(event)">
+                    </label>
+                    <span id="photo-preview-name" class="text-xs text-gray-400 truncate max-w-[120px]">未選擇</span>
+                </div>
+                <button onclick="addExpense()" class="w-full bg-lanna-green text-white font-bold py-2 rounded-xl text-sm shadow hover:bg-lanna-green/90 transition">
+                    新增這筆記帳
+                </button>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-cream-200 space-y-3">
+                <div class="flex justify-between items-center border-b border-cream-100 pb-2">
+                    <h3 class="font-bold text-sm text-lanna-green">消費歷史</h3>
+                    <div class="text-right">
+                        <span class="text-xs text-gray-500">總計:</span>
+                        <span id="total-expense-thb" class="font-bold text-lanna-clay text-sm">0 THB</span>
+                    </div>
+                </div>
+                <div id="expense-list" class="space-y-2 max-h-80 overflow-y-auto"></div>
+            </div>
+        </section>
+
+        <!-- ================= 11. TRANSLATE (翻譯功能) ================= -->
+        <section id="tab-translate" class="tab-content space-y-4 hidden">
+            <div class="flex items-center justify-between">
+                <h2 class="font-bold text-lg text-lanna-green flex items-center gap-2">
+                    <span>🗣️</span> 泰文即時常用翻譯卡
+                </h2>
+                <button onclick="switchTab('home')" class="text-xs text-lanna-clay font-bold">← 返回主畫面</button>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-cream-200 space-y-3">
+                <p class="text-xs text-gray-500">出示給店家或司機看，溝通超方便！</p>
+                <div class="space-y-2">
+                    <div class="bg-cream-50 p-3 rounded-xl border border-cream-200">
+                        <div class="text-xs font-bold text-lanna-gold">日常問候</div>
+                        <div class="text-sm font-bold text-lanna-green mt-0.5">你好 / 謝謝</div>
+                        <div class="text-xs text-lanna-clay mt-1">Sawasdee / Khop Khun</div>
+                        <div class="text-base font-bold text-gray-800 mt-0.5">สวัสดี / ขอบคุณ</div>
+                    </div>
+
+                    <div class="bg-cream-50 p-3 rounded-xl border border-cream-200">
+                        <div class="text-xs font-bold text-lanna-gold">點餐與飲食</div>
+                        <div class="text-sm font-bold text-lanna-green mt-0.5">不要辣 / 少冰</div>
+                        <div class="text-xs text-lanna-clay mt-1">Mai Phet / Yen Noi</div>
+                        <div class="text-base font-bold text-gray-800 mt-0.5">ไม่เผ็ด / น้ำแข็งน้อย</div>
+                    </div>
+
+                    <div class="bg-cream-50 p-3 rounded-xl border border-cream-200">
+                        <div class="text-xs font-bold text-lanna-gold">結帳與購物</div>
+                        <div class="text-sm font-bold text-lanna-green mt-0.5">多少錢？ / 可以便宜一點嗎？</div>
+                        <div class="text-xs text-lanna-clay mt-1">Tao Rai? / Lort Noi Dai Mai?</div>
+                        <div class="text-base font-bold text-gray-800 mt-0.5">เท่าไหร่? / ลดหน่อยได้ไหม?</div>
+                    </div>
+
+                    <div class="bg-cream-50 p-3 rounded-xl border border-cream-200">
+                        <div class="text-xs font-bold text-lanna-gold">搭車與計程車</div>
+                        <div class="text-sm font-bold text-lanna-green mt-0.5">請開啟跳表 (By Meter)</div>
+                        <div class="text-xs text-lanna-clay mt-1">Please turn on the meter</div>
+                        <div class="text-base font-bold text-gray-800 mt-0.5">กรุณาเปิดมิเตอร์</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 底部 Navigation Bar (Mobile Style) -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-cream-200 py-2 px-3 z-50 flex justify-around items-center shadow-lg max-w-md mx-auto">
+        <button onclick="switchTab('home')" id="nav-home" class="nav-btn flex flex-col items-center text-lanna-green">
+            <i class="fa-solid fa-house text-lg"></i>
+            <span class="text-[10px] font-bold mt-0.5">主畫面</span>
+        </button>
+        <button onclick="switchTab('plan')" id="nav-plan" class="nav-btn flex flex-col items-center text-gray-400">
+            <i class="fa-solid fa-calendar-days text-lg"></i>
+            <span class="text-[10px] font-bold mt-0.5">行程</span>
+        </button>
+        <button onclick="switchTab('wallet')" id="nav-wallet" class="nav-btn flex flex-col items-center text-gray-400">
+            <i class="fa-solid fa-wallet text-lg"></i>
+            <span class="text-[10px] font-bold mt-0.5">記帳</span>
+        </button>
+        <button onclick="switchTab('rate')" id="nav-rate" class="nav-btn flex flex-col items-center text-gray-400">
+            <i class="fa-solid fa-calculator text-lg"></i>
+            <span class="text-[10px] font-bold mt-0.5">外匯</span>
+        </button>
+        <button onclick="switchTab('translate')" id="nav-translate" class="nav-btn flex flex-col items-center text-gray-400">
+            <i class="fa-solid fa-language text-lg"></i>
+            <span class="text-[10px] font-bold mt-0.5">翻譯</span>
+        </button>
+    </nav>
+
+    <!-- Modal: 新增願望 -->
+    <div id="wish-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-xs w-full p-4 space-y-3 shadow-xl">
+            <h3 class="font-bold text-lanna-green text-sm">新增探店或伴手禮願望</h3>
+            <input type="text" id="wish-title" placeholder="名稱 (例: Baan Landai)" class="w-full p-2 border border-cream-200 rounded-lg text-sm">
+            <select id="wish-category" class="w-full p-2 border border-cream-200 rounded-lg text-sm bg-white">
+                <option value="探店">☕ 探店/美食</option>
+                <option value="伴手禮">🛒 伴手禮採購</option>
+            </select>
+            <textarea id="wish-note" placeholder="備註、營業時間或網址" class="w-full p-2 border border-cream-200 rounded-lg text-sm"></textarea>
+            <div class="flex gap-2 justify-end">
+                <button onclick="closeAddWishModal()" class="px-3 py-1.5 text-xs text-gray-500">取消</button>
+                <button onclick="saveWishItem()" class="px-3 py-1.5 bg-lanna-green text-white text-xs font-bold rounded-lg">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript 核心程式碼 -->
+    <script>
+        const APP_DATA_KEY = 'chiangmai_trip_app_v3';
+        let currentExchangeRate = 0.985; // 臺灣銀行現鈔賣出價參考匯率
+
+        let appState = {
+            seniorMode: false,
+            privacyHidden: false,
+            currentDay: 1,
+            itinerary: {
+                1: [
+                    { time: '04:00', title: '機場接送 (第一站 - 新竹)', note: '司機抵達', done: false },
+                    { time: '04:30', title: '機場接送 (第二站 - 林口)', note: '', done: false },
+                    { time: '05:10', title: '抵達桃園機場第一航廈', note: '辦理托運出境', done: false },
+                    { time: '07:30', title: '搭乘 CI851 飛往清邁', note: '機上休息', done: false },
+                    { time: '10:20', title: '落地清邁機場 (CNX)', note: '辦理入境與取行李', done: false },
+                    { time: '12:00', title: '搭 Grab 前往阿基拉塔佩飯店寄放行李', note: '', done: false }
+                ],
+                2: [
+                    { time: '07:30', title: '飯店享用早餐', note: '', done: false },
+                    { time: '09:00', title: '參加“清萊一日遊” (白廟/藍廟)', note: '寺廟不可穿著短褲', done: false }
+                ],
+                3: [
+                    { time: '08:00', title: '早餐與辦理退房', note: '換至那皮亞丁精品飯店', done: false },
+                    { time: '13:00', title: '大象保護區體驗', note: '請多帶一套替換衣物', done: false }
+                ],
+                4: [{ time: '08:00', title: '全日自由活動探店購物', note: '前往白色市集或古城區', done: false }],
+                5: [{ time: '11:20', title: '搭乘 CI852 飛回台北', note: '預計 16:00 抵達桃園機場', done: false }]
+            },
+            expenses: [],
+            memo: '',
+            checklist: [
+                { text: '旅遊平安不便險投保', checked: false },
+                { text: '護照正本/國際駕照', checked: false },
+                { text: '泰銖現金 (建議每人2萬泰銖)', checked: false },
+                { text: '常備藥品 (腸胃/暈車)', checked: false }
+            ],
+            wishlist: [
+                { id: 'w1', title: 'Baan Landai Fine Thai Cuisine', category: '探店', note: '米其林推薦餐廳', done: false },
+                { id: 'w2', title: 'Big C 超市採購手標茶', category: '伴手禮', note: '泰奶粉、蜂蜜', done: false }
+            ]
+        };
+
+        let tempBase64Photo = '';
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadLocalData();
+            renderItinerary();
+            renderExpenses();
+            renderChecklist();
+            renderWishlist();
+            document.getElementById('memo-input').value = appState.memo || '';
+            renderMemoDisplay();
+        });
+
+        function loadLocalData() {
+            const saved = localStorage.getItem(APP_DATA_KEY);
+            if (saved) {
+                try { appState = Object.assign(appState, JSON.parse(saved)); } catch(e) {}
+            }
+        }
+
+        function saveData() {
+            localStorage.setItem(APP_DATA_KEY, JSON.stringify(appState));
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-lanna-green');
+                btn.classList.add('text-gray-400');
+            });
+
+            const currentNav = document.getElementById(`nav-${tabName}`);
+            if (currentNav) {
+                currentNav.classList.add('text-lanna-green');
+                currentNav.classList.remove('text-gray-400');
+            }
+        }
+
+        function togglePrivacy() {
+            appState.privacyHidden = !appState.privacyHidden;
+            document.querySelectorAll('.privacy-text').forEach(el => {
+                el.classList.toggle('hide-privacy', appState.privacyHidden);
+            });
+            saveData();
+        }
+
+        function toggleSeniorMode() {
+            appState.seniorMode = !appState.seniorMode;
+            document.body.classList.toggle('senior-mode', appState.seniorMode);
+            saveData();
+        }
+
+        function switchDay(day) {
+            appState.currentDay = day;
+            document.querySelectorAll('.day-btn').forEach((btn, idx) => {
+                btn.className = (idx + 1 === day) 
+                    ? "day-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-lanna-green text-white"
+                    : "day-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-cream-200 text-lanna-green";
+            });
+            renderItinerary();
+        }
+
+        function renderItinerary() {
+            const container = document.getElementById('itinerary-list');
+            container.innerHTML = '';
+            const items = appState.itinerary[appState.currentDay] || [];
+
+            items.forEach((item, idx) => {
+                const card = document.createElement('div');
+                card.className = `bg-white p-3 rounded-xl border border-cream-200 shadow-sm flex items-start gap-3 ${item.done ? 'opacity-50 line-through' : ''}`;
+                card.innerHTML = `
+                    <input type="checkbox" ${item.done ? 'checked' : ''} onchange="toggleItineraryDone(${idx})" class="mt-1 w-4 h-4 accent-lanna-green">
+                    <div class="flex-1 text-xs">
+                        <div class="flex justify-between font-bold text-lanna-green">
+                            <span>⏱️ ${item.time}</span>
+                            <span>${item.title}</span>
+                        </div>
+                        <div class="mt-1 text-gray-600">${item.note}</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function toggleItineraryDone(idx) {
+            appState.itinerary[appState.currentDay][idx].done = !appState.itinerary[appState.currentDay][idx].done;
+            saveData();
+            renderItinerary();
+        }
+
+        async function fetchLiveExchangeRate() {
+            try {
+                const res = await fetch('https://open.er-api.com/v6/latest/THB');
+                const data = await res.json();
+                if (data && data.rates && data.rates.TWD) {
+                    currentExchangeRate = data.rates.TWD;
+                    document.getElementById('current-rate-display').innerText = currentExchangeRate.toFixed(4);
+                    document.getElementById('rate-update-time').innerText = '即時外匯更新成功';
+                    convertCurrency('thb');
+                }
+            } catch(e) {
+                alert('外匯更新失敗，使用銀行現鈔賣出參考值 0.985');
+            }
+        }
+
+        function convertCurrency(type) {
+            if (type === 'thb') {
+                const thb = document.getElementById('calc-thb').value;
+                document.getElementById('calc-twd').value = Math.round(thb * currentExchangeRate);
+            } else {
+                const twd = document.getElementById('calc-twd').value;
+                document.getElementById('calc-thb').value = Math.round(twd / currentExchangeRate);
+            }
+        }
+
+        function handlePhotoUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            document.getElementById('photo-preview-name').innerText = file.name;
+            const reader = new FileReader();
+            reader.onload = function(evt) { tempBase64Photo = evt.target.result; }
+            reader.readAsDataURL(file);
+        }
+
+        function addExpense() {
+            const item = document.getElementById('expense-item').value;
+            const amount = parseFloat(document.getElementById('expense-amount').value);
+            const payer = document.getElementById('expense-payer').value || '未指定';
+            const method = document.getElementById('expense-method').value;
+
+            if (!item || isNaN(amount)) { alert('請填寫完整名稱與金額'); return; }
+
+            appState.expenses.push({ id: Date.now(), item, amount, payer, method, photo: tempBase64Photo });
+            tempBase64Photo = '';
+            document.getElementById('expense-item').value = '';
+            document.getElementById('expense-amount').value = '';
+            saveData();
+            renderExpenses();
+        }
+
+        function renderExpenses() {
+            const container = document.getElementById('expense-list');
+            container.innerHTML = '';
+            let total = 0;
+
+            appState.expenses.forEach(exp => {
+                total += exp.amount;
+                const card = document.createElement('div');
+                card.className = "bg-cream-50 p-2.5 rounded-xl border border-cream-200 text-xs flex justify-between items-center";
+                card.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        ${exp.photo ? `<img src="${exp.photo}" class="w-8 h-8 object-cover rounded-lg">` : ''}
+                        <div>
+                            <div class="font-bold text-lanna-green">${exp.item}</div>
+                            <div class="text-[10px] text-gray-500">${exp.payer} (${exp.method})</div>
+                        </div>
+                    </div>
+                    <div class="font-bold text-lanna-clay">${exp.amount} THB</div>
+                `;
+                container.appendChild(card);
+            });
+            document.getElementById('total-expense-thb').innerText = `${total} THB`;
+        }
+
+        function renderChecklist() {
+            const container = document.getElementById('checklist-container');
+            container.innerHTML = '';
+            appState.checklist.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = "flex items-center gap-2 p-1.5 hover:bg-cream-50 rounded-lg";
+                div.innerHTML = `
+                    <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleChecklist(${idx})" class="accent-lanna-green w-4 h-4">
+                    <span class="${item.checked ? 'line-through text-gray-400' : 'text-cream-800'}">${item.text}</span>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function toggleChecklist(idx) {
+            appState.checklist[idx].checked = !appState.checklist[idx].checked;
+            saveData();
+            renderChecklist();
+        }
+
+        function saveMemo() {
+            appState.memo = document.getElementById('memo-input').value;
+            saveData();
+            renderMemoDisplay();
+        }
+
+        function renderMemoDisplay() {
+            document.getElementById('memo-display').innerText = appState.memo || '尚無紀錄';
+        }
+
+        function openAddWishModal() { document.getElementById('wish-modal').classList.remove('hidden'); }
+        function closeAddWishModal() { document.getElementById('wish-modal').classList.add('hidden'); }
+
+        function saveWishItem() {
+            const title = document.getElementById('wish-title').value;
+            const category = document.getElementById('wish-category').value;
+            const note = document.getElementById('wish-note').value;
+            if (!title) return;
+
+            appState.wishlist.push({ id: 'w_' + Date.now(), title, category, note, done: false });
+            closeAddWishModal();
+            saveData();
+            renderWishlist();
+        }
+
+        function renderWishlist() {
+            const wishContainer = document.getElementById('wishlist-container');
+            const souvenirContainer = document.getElementById('souvenir-container');
+            if(wishContainer) wishContainer.innerHTML = '';
+            if(souvenirContainer) souvenirContainer.innerHTML = '';
+
+            appState.wishlist.forEach((item, idx) => {
+                const card = document.createElement('div');
+                card.className = "bg-cream-50 p-3 rounded-xl border border-cream-200 text-xs space-y-1";
+                card.innerHTML = `
+                    <div class="flex justify-between items-center font-bold text-lanna-green">
+                        <span>${item.title}</span>
+                        <span class="text-[10px] bg-lanna-gold/20 text-lanna-green px-1.5 py-0.5 rounded">${item.category}</span>
+                    </div>
+                    <p class="text-gray-600 text-[11px]">${item.note}</p>
+                `;
+                if (item.category === '伴手禮' && souvenirContainer) souvenirContainer.appendChild(card);
+                else if (wishContainer) wishContainer.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
